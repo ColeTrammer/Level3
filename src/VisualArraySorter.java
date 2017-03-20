@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.util.Random;
 
@@ -19,6 +18,7 @@ public class VisualArraySorter {
 		frame.setSize(width, height + 22);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		@SuppressWarnings("serial")
 		JPanel panel = new JPanel() {
 			@Override
 			public void paint(Graphics g) {
