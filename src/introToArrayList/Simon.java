@@ -3,8 +3,6 @@ package introToArrayList;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -77,7 +75,8 @@ public class Simon implements ActionListener {
 		if (e.getSource().equals(buttons.get(sequence.get(userInputIndex)))) {
 			userInputIndex++;
 			if (userInputIndex == sequence.size()) {
-			    SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+			    @SuppressWarnings("unused")
+				SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
 			        @Override
 			        public Void doInBackground() {
 			            // Call complicated code here
