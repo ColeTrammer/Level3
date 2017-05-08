@@ -1,3 +1,4 @@
+//Copyright © 2017 by Cole Trammer
 package snakesOnAPlane;
 
 import java.util.Random;

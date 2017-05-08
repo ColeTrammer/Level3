@@ -1,3 +1,4 @@
+//Copyright © 2017 by Cole Trammer
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;

@@ -1,3 +1,4 @@
+//Copyright © 2017 by Cole Trammer
 package introToArrayList;
 import java.util.ArrayList;
 import java.util.Random;

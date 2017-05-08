@@ -1,3 +1,4 @@
+//Copyright © 2017 by Cole Trammer
 import java.util.ArrayList;
 
 public class Fibonacci {

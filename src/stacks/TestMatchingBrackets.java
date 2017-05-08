@@ -1,3 +1,4 @@
+//Copyright © 2017 by Cole Trammer
 package stacks;
 
 import static org.junit.Assert.assertFalse;

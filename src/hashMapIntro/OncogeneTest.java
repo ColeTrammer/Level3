@@ -1,3 +1,4 @@
+//Copyright © 2017 by Cole Trammer
 package hashMapIntro;
 
 import static org.junit.Assert.assertEquals;

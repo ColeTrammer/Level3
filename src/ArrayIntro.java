@@ -1,3 +1,4 @@
+//Copyright © 2017 by Cole Trammer
 import javax.swing.JOptionPane;
 
 public class ArrayIntro {
