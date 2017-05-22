@@ -1,12 +1,16 @@
+package hangman;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Stack;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,16 +23,23 @@ public class Hangman implements KeyListener {
 	private JFrame frame;
 	private JPanel panel;
 	private JLabel display;
-
+	private JLabel picture;
+	
 	private int wordsSolved = 0;
-	private int lives = 9;
+	private int lives = 6;
 
 	private Stack<HashMap<String, ArrayList<Boolean>>> words;
-
+	private ArrayList<ImageIcon> icons;
+	private HashSet<Character> used;
+	
 	private String fp = "src/words.txt";
 
 	public Hangman() {
 
+		words = createWords();
+		icons = new ArrayList<>();
+		used = new HashSet<>();
+		
 		frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -36,13 +47,17 @@ public class Hangman implements KeyListener {
 		frame.setPreferredSize(dimension);
 		frame.addKeyListener(this);
 
+		for (int i = 0; i <= lives; i++) {
+			icons.add(new ImageIcon("src/hangman/Hangman-" + i + ".png"));
+		}
+		Collections.reverse(icons);
+		System.out.println(String.copyValueOf("a".toCharArray()));
 		panel = new JPanel();
-		display = new JLabel("");
+		display = new JLabel();
+		picture = new JLabel(icons.get(lives));
 		panel.add(display);
+		panel.add(picture);
 		frame.add(panel);
-
-		words = createWords();
-
 		updateDisplay();
 	}
 
@@ -70,7 +85,7 @@ public class Hangman implements KeyListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// Collections.shuffle(words);
+		Collections.shuffle(words);
 		return words;
 	}
 
@@ -93,8 +108,18 @@ public class Hangman implements KeyListener {
 		text += wordDisplay;
 		text += "<h2>You have " + lives + " lives.</h2><br>";
 		text += "<h2>You've solved " + wordsSolved + " word" + (wordsSolved != 1 ? "s" : "") + ".</h2><br>";
-
+		text += "<h2>Already guessed: ";
+		for (char c : used) {
+			text += c + ", ";
+		}
+		if (used.isEmpty()) {
+			text = text.substring(0, text.length() - "<h2>Already guessed: ".length());
+		} else {
+			text = text.substring(0, text.length() - 2) + "</h2>";
+		}
 		display.setText(text + "</html>");
+		
+		picture.setIcon(icons.get(lives));
 		frame.pack();
 	}
 
@@ -106,7 +131,8 @@ public class Hangman implements KeyListener {
 	public void keyTyped(KeyEvent e) {
 
 		char c = e.getKeyChar();
-
+		used.add(c);
+		
 		boolean correct = false;
 		for (String word : words.peek().keySet()) {
 			for (int i = 0; i < words.peek().get(word).size(); i++) {
@@ -114,13 +140,12 @@ public class Hangman implements KeyListener {
 					words.peek().get(word).set(i, true);
 					correct = true;
 				}
-				System.out.print(word.charAt(i));
 			}
 		}
-		System.out.println();
 		if (!correct) {
 			lives--;
 			if (lives <= 0) {
+				updateDisplay();
 				JOptionPane.showMessageDialog(frame,
 						"You guessed " + wordsSolved + " word" + (wordsSolved != 1 ? "s" : "") + " correctly.");
 				System.exit(0);
@@ -130,14 +155,18 @@ public class Hangman implements KeyListener {
 		boolean fullyCorrect = true;
 		for (String word : words.peek().keySet()) {
 			for (boolean b : words.peek().get(word)) {
-				fullyCorrect = b;
+				if (!b) {
+					fullyCorrect = false;
+				}
 			}
 		}
 		if (fullyCorrect) {
-			lives = 9;
+			updateDisplay();
+			JOptionPane.showMessageDialog(frame, "You solved it!");
+			lives = 6;
 			wordsSolved++;
 			words.pop();
-			JOptionPane.showMessageDialog(frame, "You solved it!");
+			used.clear();
 		}
 		updateDisplay();
 	}
