@@ -14,6 +14,62 @@ public class Exercises {
 		//3 Binary
 		//4 
 		operatorsBackwards(50);
+		//5 SKIP
+		//6
+		operatorsForwards(50);
+		//7 SKIP
+		//8
+		System.out.println(multiply(21, 29));
+	}
+	
+	public static int multiply(int m, int n) {
+		// 0 <= a && a < b
+		// a + b * c == n
+		int a = n; int b = 1; int c = 0; int product = 0;
+		
+		while(b < n) {
+			b *= 2;
+		}
+		
+		while (b != 1) {
+			b /= 2;
+			if (b <= a) {
+				a = a - b;
+				c *= 2;
+				c++;
+				product <<= 1;
+				product += m;
+			} else {
+				c *= 2;
+				product <<= 1;
+			}
+		}
+		assert a == 0 && b == 1 && c == n;
+		return product;
+	}
+	
+	public static void operatorsForwards(int n) {
+		// 0 <= a && a < b
+		// a + b * c == n
+		int a = n; int b = 1; int c = 0;
+		
+		while(b < n) {
+			b *= 2;
+		}
+		
+		while (b != 1) {
+			b /= 2;
+			if (b <= a) {
+				a = a - b;
+				System.out.println("B");
+				c *= 2;
+				c++;
+			} else {
+				System.out.println("A");
+				c *= 2;
+			}
+		}
+		assert a == 0 && b ==1 && c == n;	
 	}
 	
 	public static void operatorsBackwards(int n) {
